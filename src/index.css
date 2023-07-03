@@ -1,3 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,3 +17,70 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.searchForm {
+  /* display: flex; */
+  /* flex-direction: column; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: rgb(71, 77, 77);
+}
+
+.square{
+  padding: 2px;
+  background-color: yellow;
+  color: yellow;
+  margin-right: 5px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+  background-color: transparent;
+  color: white;
+}
+
+.row input{
+  background-color: transparent;
+  color: white;
+  padding: 5px;
+  border: 1px solid yellow;
+  border-radius: 5px;
+}
+
+.btns{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+button{
+  border: 1px solid yellow;
+  padding: 3px 25px;
+  border-radius: 5px;
+  color: white;
+}
+
+button:hover{
+  background-color: yellow;
+  color: rgb(71, 77, 77);
+  animation: fade 1s;
+}
+
+/* TABLE STYLING */
+
+.table-head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  color: white;
+
+  
+}
+
