@@ -84,3 +84,25 @@ button:hover{
   
 }
 
+
+
+/* MODAL STYLING */
+.modal {
+  position: absolute;
+  width: 400px;
+  height: 200px;
+  border-radius: 5px;
+  margin: 1.5rem auto;
+  /* left: 20%; */
+  top: 50%;
+  background-color: rgb(170, 173, 173);
+  box-shadow: 0 6px 8px rgb(71, 77, 77);
+}
+
+.modal-content{
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 1.5rem;
+}
+
