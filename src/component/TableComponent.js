@@ -1,60 +1,49 @@
-import React, {useContext, useEffect, useState} from "react";
 // import MyContext from "../Context API/myContext";
 // import MyContextProvider from "../Context API/myContext";
-import "../index.css"
 // import SearchComponent from "./SearchComponent";
+import React, { useContext, useEffect, useState } from "react";
+import "../index.css";
 
-function Table () {
-  const [isModal, setIsModal] = useState(true)
+function Table() {
+  return (
+    <div style={{ backgroundColor: "rgb(71, 77, 77)" }}>
+      <hr></hr>
+      <h1 style={{ padding: "1rem", fontWeight: "bold", color: "grey" }}>
+        <span className="square">.</span> MOVIE LIST:{" "}
+      </h1>
+      <FetchData />
+      {/* <Content /> */}
+    </div>
+  );
+}
+
+const FetchData = ({ onClick }) => {
+  const [data, setData] = useState([]);
+  const [isModal, setIsModal] = useState(false);
+  const [isModalDesc, setIsModalDesc] = useState(false);
 
   function modalHandler() {
-    setIsModal((m) => (!isModal))
-}
-
-  function Modal() {
-    
-    return (
-  
-        <div className="modal">
-            <div className="modal-content">
-                <p>Are You Sure You Want To Delete?</p>
-                <button className="delBtn" onClick={modalHandler} >X</button>
-            </div>
-        </div>
-    )
+    setIsModal((m) => !isModal);
   }
 
-
-
-  
-    return (
-        <div style={{backgroundColor:"rgb(71, 77, 77)"}}>
-            <hr></hr>
-        <h1 style={{padding:"1rem" , fontWeight:"bold"}}><span className="square">.</span> MOVIE: </h1>
-        <FetchData />
-        {/* <Content /> */}
-        {isModal && <Modal />} 
-
-
-        </div>
-        
-    )
-}
-const FetchData = (props) => {
-  const [data, setData] = useState([]);
+  function modalDescHandler() {
+    setIsModalDesc((d) => !isModalDesc);
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("https://api.themoviedb.org/3/movie/550?api_key=b63f19c7ec6f3bec7a65c284551109a0");
+    const fetchData = async (name) => {
+      const response = await fetch(
+        "http://www.omdbapi.com/?i=tt3896198&apikey=3f9cb62a"
+      );
       const data = await response.json();
       console.log(data); // add this line
       setData(data);
     };
     fetchData();
-  }, {});
+  });
 
   return (
-    <table>
+    <table className="table-head">
       <thead>
         <tr className="movieTableHead">
           <th>Title</th>
@@ -65,22 +54,66 @@ const FetchData = (props) => {
           <th>Remove</th>
         </tr>
       </thead>
-      <tbody >
-          <tr key={data.id} className="movieTableBody">
-            <td>{data.title}</td>
-            <td>{data.director}</td>
-            <td>{data.genre}</td>
-            <td>{data.release_date}</td>
-            <td><button className="delBtn" >Description</button></td>
-            <td><button className="delBtn" >Delete</button></td>
-          
-          </tr>
-      </tbody>
+      {!isModal && (
+        <tr key={data.id} className="movieTableBody">
+          <td>{data.Title}</td>
+          <td>{data.Director}</td>
+          <td>{data.Genre}</td>
+          <td>{data.Year}</td>
+          <td>
+            <button className="descBtn" onClick={modalDescHandler}>
+              Description
+            </button>
+            {isModalDesc && (
+              <ModalDesc
+                onClick={modalDescHandler}
+                overview={data.Plot}
+              ></ModalDesc>
+            )}
+          </td>
+          <td>
+            <button className="delBtn" onClick={modalHandler}>
+              Delete
+            </button>
+            {isModal && <Modal onClick={modalHandler} />}
+          </td>
+        </tr>
+      )}
     </table>
   );
 };
 
+function Modal({ onClick }) {
+  return (
+    <div className="modal">
+      <div className="modal-content">
+        <p>Are You Sure You Want To Delete?</p>
+        <div className="modalBtns">
+          <button className="delBtn" onClick={onClick}>
+            Yes
+          </button>
+          <button className="delBtn" onClick={onClick}>
+            No!
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-
+function ModalDesc({ overview, onClick }) {
+  return (
+    <div className="modalDesc" style={{ width: "600px" }}>
+      <button
+        className="descBtn"
+        onClick={onClick}
+        style={{ width: "10%", margin: "10px", float: "left" }}
+      >
+        x
+      </button>
+      <div className="modalDescContent">{overview}</div>
+    </div>
+  );
+}
 
 export default Table;
