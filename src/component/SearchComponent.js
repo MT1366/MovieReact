@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import Table from "./TableComponent";
 import "../index.css"
 
 function SearchComponent() {
     const [isOpen, setIsOpen] =  useState("true");
-    console.log(isOpen)
- 
+    const [inputValue, setInputValue] = useState("")
+
     return (
         <form className="searchForm shadow">
             <Input type={"text"} name={"Movies Name"} placeholder={"Enter the movies name"} />
@@ -16,7 +17,6 @@ function SearchComponent() {
             <Buttons name={"Save"} />
             <Buttons name={"Cancel"}/>
 
-            <Modal /> 
             </div>
         </form>      
 
@@ -24,43 +24,30 @@ function SearchComponent() {
 }
 
 function Input(props) {
-   const [inputValue,setInputValue] = useState("")
-    
+   const [inputValue, setInputValue] = useState("");
+
     function handleChange (event) {
     setInputValue(event.target.value)
     console.log(inputValue)
    }
-
 
     return (
         <div className="row ">
             <label><span className="square">.</span>{props.name}</label>
             <input onChange={handleChange} type={props.type} placeholder={props.placeholder}></input>
         </div>
-    )
+        )
 }
 
 
-function Buttons(props) {
+function Buttons({name, onClick}) {
 
     return (
-        <button>{props.name}</button>
+        <button onClick={onClick}>{name}</button>
     )
 }
 
 
-function Modal() {
-    
-    return (
 
-        <div className="modal">
-            <div className="modal-content">
-                <p>Are You Sure You Want To Delet?</p>
-
-                <Buttons name={"X"}/>
-            </div>
-        </div>
-    )
-}
 
 export default SearchComponent;
